@@ -36,7 +36,10 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          BASE_PATH: /${{ github.event.repository.name }}/
+          # A user site (repo named <user>.github.io) is served at the ROOT of its origin; any other
+          # repo is a project site served under /<repo>/. The banner's URL-path language detection
+          # needs the root, so a user site is what privyauto's language tests use.
+          BASE_PATH: ${{ endsWith(github.event.repository.name, '.github.io') && '/' || format('/{0}/', github.event.repository.name) }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

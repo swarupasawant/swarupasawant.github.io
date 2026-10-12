@@ -12,14 +12,40 @@
 import { mkdirSync, copyFileSync, existsSync } from 'node:fs'
 import { join, resolve } from 'node:path'
 
-const ROUTES = [
-    'shop', 'men', 'women', 'kids', 'beauty', 'home-living',
-    // Banner language auto-selection (URL-path detection) — privyauto cookie-manager tests.
-    // Real 200 pages so the banner loads on a clean response for each language path,
-    // including the ISO-collision edge cases (brx, sat) and the must-NOT-match ones (br, st).
-    'hindi', 'hi', 'gujarati', 'gu', 'marathi', 'mr', 'tamil', 'ta',
-    'brx', 'sat', 'br', 'st'
+const ROUTES = ['shop', 'men', 'women', 'kids', 'beauty', 'home-living']
+
+// Banner language auto-selection (URL-path detection), used by the privyauto cookie-manager
+// tests. The banner reads the FIRST path segment of the URL, so the site must be served at
+// the root of its origin (see README) and each accepted spelling needs a real 200 page.
+// Copied from the cookie-manager demo's make-language-routes.mjs. `br` and `st` are left out
+// ON PURPOSE: ISO assigns them to Breton and Sesotho, so the banner refuses them, and they
+// must fall through to the default language via 404.html (TRD-CKM-001 section 3.1).
+const LANGUAGE_SEGMENTS = [
+  'english', 'en',
+  'assamese', 'as',
+  'bengali', 'bangla', 'bn',
+  'bodo', 'brx',
+  'dogri', 'doi',
+  'konkani', 'gom',
+  'gujarati', 'gu',
+  'hindi', 'hi',
+  'kannada', 'kn',
+  'maithili', 'mai',
+  'malayalam', 'ml',
+  'manipuri', 'meitei', 'mni-mtei',
+  'marathi', 'mr',
+  'nepali', 'ne',
+  'oriya', 'odia', 'or',
+  'punjabi', 'panjabi', 'pa',
+  'sanskrit', 'sa',
+  'sindhi', 'sd',
+  'santhali', 'santali', 'sat',
+  'tamil', 'ta',
+  'telugu', 'te',
+  'urdu', 'ur',
+  'kashmiri', 'ks'
 ]
+ROUTES.push(...LANGUAGE_SEGMENTS)
 
 const dist = resolve('dist')
 const index = join(dist, 'index.html')
