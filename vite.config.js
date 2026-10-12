@@ -102,11 +102,11 @@ function strictCsp() {
 
 // STRICT CSP (nonce + 'strict-dynamic'). html.cspNonce makes Vite nonce the <style> tags it
 // injects for imported CSS.
-export default defineConfig({ plugins: [react(), strictCsp()], html: { cspNonce: NONCE }, base: '/' })
+// export default defineConfig({ plugins: [react(), strictCsp()], html: { cspNonce: NONCE }, base: '/' })
 
 // NO CSP — the banner must behave the same (FR-6). The __PRIVY_NONCE__ placeholder is left as
 // is; a nonce attribute is only consulted when a policy names one.
-// export default defineConfig({
-//   plugins: [react()],
-//   base: '/'
-// })
+export default defineConfig({
+  plugins: [react()],
+  base: '/'
+})
