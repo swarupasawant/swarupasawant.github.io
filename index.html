@@ -49,6 +49,12 @@
 
 <!-- ======================== END COOKIE BANNER ========================= -->
 
+<script id="prv-scan-capture-fixture">
+  document.cookie = 'prv_session_cookie=1; path=/; SameSite=Lax';
+  setTimeout(function () {
+    document.cookie = 'prv_late_cookie=1; path=/; max-age=31536000; SameSite=Lax';
+  }, 1500);
+</script>
 </head>
 
 <body>
