@@ -51,10 +51,13 @@
 
 <script id="prv-scan-capture-fixture">
   document.cookie = 'prv_session_cookie=1; path=/; SameSite=Lax';
+  document.cookie = 'prv_two_day_cookie=1; path=/; max-age=172800; SameSite=Lax';
+  document.cookie = 'prv_year_cookie=1; path=/; max-age=31536000; SameSite=Lax';
   setTimeout(function () {
     document.cookie = 'prv_late_cookie=1; path=/; max-age=31536000; SameSite=Lax';
   }, 1500);
 </script>
+<script id="prv-scan-capture-writer" src="/prv-cookie-writer.js"></script>
 </head>
 
 <body>
